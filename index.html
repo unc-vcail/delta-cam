@@ -21,6 +21,35 @@
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+
+<style>
+/* DeltaCam consolidated-page components */
+.dc-sec{max-width:960px;margin:0 auto;padding:0 12px}
+.dc-desc{color:#4a4a4a;font-size:15px;line-height:1.5;margin:.3rem 0 1rem}
+.dc-cap{font-size:13px;color:#555;text-align:center;margin:.2rem 0 1.4rem}
+/* comparison slider */
+.cmp-tabs{text-align:center;margin:.5rem 0}
+.cmp-tabs .grp{display:inline-block;margin:.15rem .6rem}
+.cmp-tabs .grp b{font-size:12px;color:#888;margin-right:6px;text-transform:uppercase;letter-spacing:.04em}
+.cmp-tabs button{margin:0 2px;padding:3px 11px;border:1px solid #d0d0d0;border-radius:16px;background:#fff;cursor:pointer;font-size:13px;transition:.15s}
+.cmp-tabs button:hover{border-color:#888}
+.cmp-tabs button.active{background:#363636;color:#fff;border-color:#363636}
+.cmp{position:relative;width:100%;max-width:760px;margin:0 auto;aspect-ratio:832/480;overflow:hidden;border-radius:8px;background:#000;user-select:none;touch-action:none}
+.cmp video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
+.cmp .over{clip-path:inset(0 0 0 var(--pos,50%))}
+.cmp .handle{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:2px;background:#fff;box-shadow:0 0 6px rgba(0,0,0,.7);cursor:ew-resize;z-index:3}
+.cmp .handle::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;background:#fff;box-shadow:0 0 6px rgba(0,0,0,.5)}
+.cmp .handle::before{content:'\21D4';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:4;font-size:15px;color:#363636}
+.cmp .lbl{position:absolute;top:8px;padding:2px 9px;font-size:12px;font-weight:600;color:#fff;background:rgba(0,0,0,.6);border-radius:4px;z-index:4}
+.cmp .lbl.l{left:8px}.cmp .lbl.r{right:8px}
+/* labeled same-size video rows */
+.vrow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:.3rem 0 1.4rem}
+.vcell{flex:1 1 230px;max-width:300px}
+.vcell .box{position:relative;width:100%;aspect-ratio:832/480;border-radius:6px;overflow:hidden;background:#000}
+.vcell video{width:100%;height:100%;object-fit:cover;display:block}
+.vcell .t{font-size:12px;color:#666;text-align:center;margin-top:4px}
+.vcell .t b{color:#363636}
+</style>
 </head>
 <body>
 
@@ -55,11 +84,6 @@
               <span class="link-block">
                 <a href="https://arxiv.org/html/2605.25266v1" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="./supp/index.html" class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon"><i class="fas fa-photo-video"></i></span><span>Full Results Browser</span>
                 </a>
               </span>
               <span class="link-block">
@@ -125,199 +149,64 @@
   </div>
 </section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Intrinsic Camera Control</h2>
-    <p class="has-text-centered" style="margin-bottom: 1.5rem;">
-      One model controls six camera effects with per-frame parameter trajectories.
-      Left: input video &nbsp;·&nbsp; Right: DeltaCam output.
-    </p>
-    <div class="columns is-multiline">
-      <div class="column is-half">
-        <h3 class="title is-6 has-text-centered">Bokeh (aperture rack)</h3>
-        <div class="columns is-gapless is-mobile">
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/bokeh_source.mp4" type="video/mp4"></video></div>
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/bokeh_ours.mp4" type="video/mp4"></video></div>
-        </div>
-      </div>
-      <div class="column is-half">
-        <h3 class="title is-6 has-text-centered">Exposure</h3>
-        <div class="columns is-gapless is-mobile">
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/exposure_source.mp4" type="video/mp4"></video></div>
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/exposure_ours.mp4" type="video/mp4"></video></div>
-        </div>
-      </div>
-      <div class="column is-half">
-        <h3 class="title is-6 has-text-centered">Optical zoom (25&rarr;100&nbsp;mm)</h3>
-        <div class="columns is-gapless is-mobile">
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/zooming_source.mp4" type="video/mp4"></video></div>
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/zooming_ours.mp4" type="video/mp4"></video></div>
-        </div>
-      </div>
-      <div class="column is-half">
-        <h3 class="title is-6 has-text-centered">Color temperature</h3>
-        <div class="columns is-gapless is-mobile">
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/temperature_source.mp4" type="video/mp4"></video></div>
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/temperature_ours.mp4" type="video/mp4"></video></div>
-        </div>
-      </div>
-      <div class="column is-half">
-        <h3 class="title is-6 has-text-centered">Fisheye distortion</h3>
-        <div class="columns is-gapless is-mobile">
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/fisheye_source.mp4" type="video/mp4"></video></div>
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/fisheye_ours.mp4" type="video/mp4"></video></div>
-        </div>
-      </div>
-      <div class="column is-half">
-        <h3 class="title is-6 has-text-centered">Cinematic shutter (motion blur)</h3>
-        <div class="columns is-gapless is-mobile">
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/shutter_source.mp4" type="video/mp4"></video></div>
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/shutter_ours.mp4" type="video/mp4"></video></div>
-        </div>
-      </div>
-    </div>
+
+<section class="section"><div class="dc-sec">
+  <h2 class="title is-3 has-text-centered">Single-Effect Camera Control vs. Prior Video Models</h2>
+  <p class="dc-desc">One intrinsic effect at a time, applied to the same clip. Drag the divider to
+  wipe between <b>Ours</b> (left) and a baseline (right); switch the effect and the compared method
+  below. All clips are shown at the same size.</p>
+  <div class="cmp-tabs">
+    <span class="grp"><b>effect</b><button data-eff="bokeh" class="active">Bokeh</button><button data-eff="exposure">Exposure</button><button data-eff="temperature">Temperature</button><button data-eff="zooming">Zooming</button><button data-eff="shutter">Shutter</button><button data-eff="fisheye">Fisheye</button></span>
+    <span class="grp"><b>vs</b><button data-m="Source">Source</button><button data-m="VACE">VACE</button><button data-m="CogVideoX">CogVideoX</button><button data-m="GT" class="active">GT</button></span>
   </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Mixed &amp; Out-of-Distribution Effects</h2>
-    <p class="has-text-centered" style="margin-bottom: 1.5rem;">
-      Effects compose: input (left), Bokeh + Exposure together (middle), and three simultaneous
-      geometric effects never seen together in training — Bokeh + Zoom + Fisheye (right).
-    </p>
-    <div class="columns">
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/mixed_bok_exp_source.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/mixed_bok_exp.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/ood_3effect.mp4" type="video/mp4"></video></div>
-    </div>
+  <div class="cmp" id="cmp1">
+    <video class="base" autoplay muted loop playsinline></video>
+    <video class="over" autoplay muted loop playsinline></video>
+    <div class="lbl l">Ours</div><div class="lbl r" id="cmp1r">GT</div>
+    <div class="handle"></div>
   </div>
-</section>
+  <p class="dc-cap">Ours vs. VACE / CogVideoX / physics-rendered GT. Scene <code>rcv07988</code>.</p>
+</div></section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Real Camera Matching</h2>
-    <p class="has-text-centered" style="margin-bottom: 1.5rem;">
-      Fine-tuned on real image&ndash;EXIF pairs, DeltaCam reproduces the look of specific
-      real camera settings.
-    </p>
-    <div class="columns is-multiline">
-      <div class="column is-half">
-        <h3 class="title is-6 has-text-centered">Input &rarr; DSLR f/1.4 bokeh</h3>
-        <div class="columns is-gapless is-mobile">
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/match_bokeh_source.mp4" type="video/mp4"></video></div>
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/match_bokeh_f14.mp4" type="video/mp4"></video></div>
-        </div>
-      </div>
-      <div class="column is-half">
-        <h3 class="title is-6 has-text-centered">Input &rarr; +2 EV exposure</h3>
-        <div class="columns is-gapless is-mobile">
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/match_exposure_source.mp4" type="video/mp4"></video></div>
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/match_exposure.mp4" type="video/mp4"></video></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<section class="section"><div class="dc-sec">
+  <h2 class="title is-3 has-text-centered">Matcher Validation — Pseudo-Video vs. Ground Truth</h2>
+  <p class="dc-desc">On real paired photos with a physical <b>ground-truth</b> target, the finetuned
+  matcher reproduces the target look (source &rarr; our output &rarr; real GT).</p>
+  <div class="vrow"><div class="vcell"><div class="box"><video src="supp/matcher_validation/bokeh/sample1_source.mp4" autoplay muted loop playsinline></video></div><div class="t">Source (f/22 / dark)</div></div><div class="vcell"><div class="box"><video src="supp/matcher_validation/bokeh/sample1_output.mp4" autoplay muted loop playsinline></video></div><div class="t"><b>Ours (matched)</b></div></div><div class="vcell"><div class="box"><video src="supp/matcher_validation/bokeh/sample1_gt.mp4" autoplay muted loop playsinline></video></div><div class="t">Real GT</div></div></div><div class="dc-cap">Bokeh (f/2.0)</div><div class="vrow"><div class="vcell"><div class="box"><video src="supp/matcher_validation/exposure/sample1_source.mp4" autoplay muted loop playsinline></video></div><div class="t">Source (f/22 / dark)</div></div><div class="vcell"><div class="box"><video src="supp/matcher_validation/exposure/sample1_output.mp4" autoplay muted loop playsinline></video></div><div class="t"><b>Ours (matched)</b></div></div><div class="vcell"><div class="box"><video src="supp/matcher_validation/exposure/sample1_gt.mp4" autoplay muted loop playsinline></video></div><div class="t">Real GT</div></div></div><div class="dc-cap">Exposure (+3 EV)</div>
+</div></section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Video-to-Video Style Transfer</h2>
-    <p class="has-text-centered" style="margin-bottom: 1.5rem;">
-      A disentangled style extractor recovers the camera-parameter trajectory from a reference
-      video (left) and applies it to new content (right) — no explicit camera labels needed.
-    </p>
-    <div class="columns is-multiline">
-      <div class="column is-half">
-        <h3 class="title is-6 has-text-centered">Bokeh style: reference &rarr; transferred</h3>
-        <div class="columns is-gapless is-mobile">
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/style_ref_bokeh.mp4" type="video/mp4"></video></div>
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/style_out_bokeh.mp4" type="video/mp4"></video></div>
-        </div>
-      </div>
-      <div class="column is-half">
-        <h3 class="title is-6 has-text-centered">Exposure style: reference &rarr; transferred</h3>
-        <div class="columns is-gapless is-mobile">
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/style_ref_exposure.mp4" type="video/mp4"></video></div>
-          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/style_out_exposure.mp4" type="video/mp4"></video></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<section class="section"><div class="dc-sec">
+  <h2 class="title is-3 has-text-centered">Real-Video Camera Matching</h2>
+  <p class="dc-desc">Applying real camera settings to in-the-wild footage (bokeh aperture, exposure EV).</p>
+  <div class="vrow"><div class="vcell"><div class="box"><video src="supp/bokeh_match_results_realbokeh/ap_f1p4_source.mp4" autoplay muted loop playsinline></video></div><div class="t">Source</div></div><div class="vcell"><div class="box"><video src="supp/bokeh_match_results_realbokeh/ap_f1p4_new_model.mp4" autoplay muted loop playsinline></video></div><div class="t"><b>Ours &mdash; f/1.4</b></div></div></div><div class="vrow"><div class="vcell"><div class="box"><video src="supp/exposure_match_results/3ev/pair1/source.mp4" autoplay muted loop playsinline></video></div><div class="t">Source</div></div><div class="vcell"><div class="box"><video src="supp/exposure_match_results/3ev/pair1/new_model.mp4" autoplay muted loop playsinline></video></div><div class="t"><b>Ours &mdash; +3 EV</b></div></div></div>
+</div></section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Optical Zoom vs. Dolly-In</h2>
-    <p class="has-text-centered" style="margin-bottom: 1.5rem;">
-      Intrinsic zoom (left, ours) changes focal length with true perspective compression, unlike
-      extrinsic dolly-forward motion (right, ReCamMaster) which translates the camera.
-    </p>
-    <div class="columns">
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/zoom_ours.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/zoom_recammaster.mp4" type="video/mp4"></video></div>
-    </div>
-    <p class="has-text-centered" style="margin-top: 1.5rem;">
-      Many more results — full extrinsic camera control, applications, and ablations — are in the
-      <a href="./supp/index.html"><b>full results browser</b></a>.
-    </p>
-  </div>
-</section>
+<section class="section"><div class="dc-sec">
+  <h2 class="title is-3 has-text-centered">Full Camera Control (Extrinsic Pose + Intrinsics)</h2>
+  <p class="dc-desc">Extrinsic camera motion and intrinsic effects driven jointly, matched against
+  physics-rendered GT.</p>
+  <div class="vrow"><div class="vcell"><div class="box"><video src="supp/full_cam_control/cam_type_2/video0/output_source.mp4" autoplay muted loop playsinline></video></div><div class="t">Source</div></div><div class="vcell"><div class="box"><video src="supp/full_cam_control/cam_type_2/video0/output.mp4" autoplay muted loop playsinline></video></div><div class="t"><b>Ours (pose+intrinsics)</b></div></div><div class="vcell"><div class="box"><video src="supp/full_cam_control/cam_type_2/video0/output_gt.mp4" autoplay muted loop playsinline></video></div><div class="t">GT</div></div></div><div class="vrow"><div class="vcell"><div class="box"><video src="supp/full_cam_control/cam_type_2/video1/output_source.mp4" autoplay muted loop playsinline></video></div><div class="t">Source</div></div><div class="vcell"><div class="box"><video src="supp/full_cam_control/cam_type_2/video1/output.mp4" autoplay muted loop playsinline></video></div><div class="t"><b>Ours (pose+intrinsics)</b></div></div><div class="vcell"><div class="box"><video src="supp/full_cam_control/cam_type_2/video1/output_gt.mp4" autoplay muted loop playsinline></video></div><div class="t">GT</div></div></div>
+</div></section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Comparison with Prior Video Models</h2>
-    <p class="has-text-centered" style="margin-bottom: 1.5rem;">
-      The same input and effect are given to each method. DeltaCam applies an explicit per-frame
-      camera-parameter trajectory; the text-driven baselines (CogVideoX, VACE, LTX-Video) receive
-      an effect prompt. Only DeltaCam applies the intrinsic effect while preserving the scene.
-    </p>
+<section class="section"><div class="dc-sec">
+  <h2 class="title is-3 has-text-centered">Video-to-Video Style Transfer</h2>
+  <p class="dc-desc">The camera-style extractor pulls a reference clip's intrinsic trajectory (no labels)
+  and re-applies it to new content. Photometric and lens effects transfer most cleanly.</p>
+  <div class="vrow"><div class="vcell"><div class="box"><video src="supp/style_transfer_results_supp/pair4_temperature_a_gt.mp4" autoplay muted loop playsinline></video></div><div class="t">Reference style</div></div><div class="vcell"><div class="box"><video src="supp/style_transfer_results_supp/pair4_temperature_b_source.mp4" autoplay muted loop playsinline></video></div><div class="t">Content</div></div><div class="vcell"><div class="box"><video src="supp/style_transfer_results_supp/pair4_temperature_b_transferred.mp4" autoplay muted loop playsinline></video></div><div class="t"><b>Transferred</b></div></div></div><div class="dc-cap">Color temperature</div><div class="vrow"><div class="vcell"><div class="box"><video src="supp/style_transfer_results_supp/pair4_fisheye_a_gt.mp4" autoplay muted loop playsinline></video></div><div class="t">Reference style</div></div><div class="vcell"><div class="box"><video src="supp/style_transfer_results_supp/pair4_fisheye_b_source.mp4" autoplay muted loop playsinline></video></div><div class="t">Content</div></div><div class="vcell"><div class="box"><video src="supp/style_transfer_results_supp/pair4_fisheye_b_transferred.mp4" autoplay muted loop playsinline></video></div><div class="t"><b>Transferred</b></div></div></div><div class="dc-cap">Lens distortion</div><div class="vrow"><div class="vcell"><div class="box"><video src="supp/style_transfer_results_supp/pair0_exposure_a_gt.mp4" autoplay muted loop playsinline></video></div><div class="t">Reference style</div></div><div class="vcell"><div class="box"><video src="supp/style_transfer_results_supp/pair0_exposure_b_source.mp4" autoplay muted loop playsinline></video></div><div class="t">Content</div></div><div class="vcell"><div class="box"><video src="supp/style_transfer_results_supp/pair0_exposure_b_transferred.mp4" autoplay muted loop playsinline></video></div><div class="t"><b>Transferred</b></div></div></div><div class="dc-cap">Exposure</div><div class="vrow"><div class="vcell"><div class="box"><video src="supp/style_transfer_results_supp/pair0_zooming_a_gt.mp4" autoplay muted loop playsinline></video></div><div class="t">Reference style</div></div><div class="vcell"><div class="box"><video src="supp/style_transfer_results_supp/pair0_zooming_b_source.mp4" autoplay muted loop playsinline></video></div><div class="t">Content</div></div><div class="vcell"><div class="box"><video src="supp/style_transfer_results_supp/pair0_zooming_b_transferred.mp4" autoplay muted loop playsinline></video></div><div class="t"><b>Transferred</b></div></div></div><div class="dc-cap">Optical zoom</div>
+</div></section>
 
-    <div class="columns is-mobile has-text-centered" style="margin-bottom: 0;">
-      <div class="column"><b>Input</b></div>
-      <div class="column"><b>DeltaCam (Ours)</b></div>
-      <div class="column"><b>CogVideoX</b></div>
-      <div class="column"><b>VACE</b></div>
-      <div class="column"><b>LTX-Video</b></div>
-    </div>
+<section class="section"><div class="dc-sec">
+  <h2 class="title is-3 has-text-centered">Out-of-Distribution: 3+ Simultaneous Effects</h2>
+  <p class="dc-desc">Combining several geometric + photometric effects at once &mdash; beyond the
+  one-per-group training regime.</p>
+  <div class="vrow"><div class="vcell"><div class="box"><video src="supp/ood_results/ood_001_bok_zoo_fis_source.mp4" autoplay muted loop playsinline></video></div><div class="t">Source</div></div><div class="vcell"><div class="box"><video src="supp/ood_results/ood_001_bok_zoo_fis_generated.mp4" autoplay muted loop playsinline></video></div><div class="t"><b>Ours</b></div></div><div class="vcell"><div class="box"><video src="supp/ood_results/ood_001_bok_zoo_fis_gt.mp4" autoplay muted loop playsinline></video></div><div class="t">GT</div></div></div><div class="dc-cap">Bokeh + Zoom + Fisheye</div><div class="vrow"><div class="vcell"><div class="box"><video src="supp/ood_results/ood_002_bok_zoo_fis_source.mp4" autoplay muted loop playsinline></video></div><div class="t">Source</div></div><div class="vcell"><div class="box"><video src="supp/ood_results/ood_002_bok_zoo_fis_generated.mp4" autoplay muted loop playsinline></video></div><div class="t"><b>Ours</b></div></div><div class="vcell"><div class="box"><video src="supp/ood_results/ood_002_bok_zoo_fis_gt.mp4" autoplay muted loop playsinline></video></div><div class="t">GT</div></div></div><div class="dc-cap">Bokeh + Zoom + Fisheye</div>
+</div></section>
 
-    <h3 class="title is-6 has-text-centered" style="margin: 0.4rem 0;">Bokeh (aperture rack)</h3>
-    <div class="columns is-mobile is-gapless">
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_bokeh_input.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_bokeh_ours.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_bokeh_cogvideox.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_bokeh_vace.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_bokeh_ltx.mp4" type="video/mp4"></video></div>
-    </div>
-
-    <h3 class="title is-6 has-text-centered" style="margin: 0.4rem 0;">Optical zoom (25&rarr;100&nbsp;mm)</h3>
-    <div class="columns is-mobile is-gapless">
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_zooming_input.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_zooming_ours.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_zooming_cogvideox.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_zooming_vace.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_zooming_ltx.mp4" type="video/mp4"></video></div>
-    </div>
-
-    <h3 class="title is-6 has-text-centered" style="margin: 0.4rem 0;">Color temperature</h3>
-    <div class="columns is-mobile is-gapless">
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_temperature_input.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_temperature_ours.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_temperature_cogvideox.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_temperature_vace.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_temperature_ltx.mp4" type="video/mp4"></video></div>
-    </div>
-
-    <h3 class="title is-6 has-text-centered" style="margin: 0.4rem 0;">Fisheye distortion</h3>
-    <div class="columns is-mobile is-gapless">
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_fisheye_input.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_fisheye_ours.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_fisheye_cogvideox.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_fisheye_vace.mp4" type="video/mp4"></video></div>
-      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_fisheye_ltx.mp4" type="video/mp4"></video></div>
-    </div>
-  </div>
-</section>
+<section class="section"><div class="dc-sec">
+  <h2 class="title is-3 has-text-centered">Mixed-Effect Results</h2>
+  <p class="dc-desc">Two co-occurring effects applied to real content.</p>
+  <div class="vrow"><div class="vcell"><div class="box"><video src="supp/supplementary_mixed_style/sample_001_bok_exp_source.mp4" autoplay muted loop playsinline></video></div><div class="t">Source</div></div><div class="vcell"><div class="box"><video src="supp/supplementary_mixed_style/sample_001_bok_exp_generated.mp4" autoplay muted loop playsinline></video></div><div class="t"><b>Ours</b></div></div><div class="vcell"><div class="box"><video src="supp/supplementary_mixed_style/sample_001_bok_exp_gt.mp4" autoplay muted loop playsinline></video></div><div class="t">GT</div></div></div><div class="dc-cap">Bokeh + Exposure</div><div class="vrow"><div class="vcell"><div class="box"><video src="supp/supplementary_mixed_style/sample_002_bok_tem_source.mp4" autoplay muted loop playsinline></video></div><div class="t">Source</div></div><div class="vcell"><div class="box"><video src="supp/supplementary_mixed_style/sample_002_bok_tem_generated.mp4" autoplay muted loop playsinline></video></div><div class="t"><b>Ours</b></div></div><div class="vcell"><div class="box"><video src="supp/supplementary_mixed_style/sample_002_bok_tem_gt.mp4" autoplay muted loop playsinline></video></div><div class="t">GT</div></div></div><div class="dc-cap">Bokeh + Temperature</div>
+</div></section>
 
 <section class="section" id="acknowledgements">
   <div class="container is-max-desktop content">
@@ -352,5 +241,37 @@
   </div>
 </footer>
 
+
+<script>
+(function(){
+  var DATA = {"bokeh": {"ours": "supp/effect_comparison_videos/bokeh_ours_rcv07988.mp4", "Source": "supp/effect_comparison_videos/bokeh_source_rcv07988.mp4", "VACE": "supp/effect_comparison_videos/bokeh_vace_rcv07988.mp4", "CogVideoX": "supp/effect_comparison_videos/bokeh_cogvideox_rcv07988.mp4", "GT": "supp/effect_comparison_videos/bokeh_gt_rcv07988.mp4"}, "exposure": {"ours": "supp/effect_comparison_videos/exposure_ours_rcv07988.mp4", "Source": "supp/effect_comparison_videos/exposure_source_rcv07988.mp4", "VACE": "supp/effect_comparison_videos/exposure_vace_rcv07988.mp4", "CogVideoX": "supp/effect_comparison_videos/exposure_cogvideox_rcv07988.mp4", "GT": "supp/effect_comparison_videos/exposure_gt_rcv07988.mp4"}, "temperature": {"ours": "supp/effect_comparison_videos/temperature_ours_rcv07988.mp4", "Source": "supp/effect_comparison_videos/temperature_source_rcv07988.mp4", "VACE": "supp/effect_comparison_videos/temperature_vace_rcv07988.mp4", "CogVideoX": "supp/effect_comparison_videos/temperature_cogvideox_rcv07988.mp4", "GT": "supp/effect_comparison_videos/temperature_gt_rcv07988.mp4"}, "zooming": {"ours": "supp/effect_comparison_videos/zooming_ours_rcv07988.mp4", "Source": "supp/effect_comparison_videos/zooming_source_rcv07988.mp4", "VACE": "supp/effect_comparison_videos/zooming_vace_rcv07988.mp4", "CogVideoX": "supp/effect_comparison_videos/zooming_cogvideox_rcv07988.mp4", "GT": "supp/effect_comparison_videos/zooming_gt_rcv07988.mp4"}, "shutter": {"ours": "supp/effect_comparison_videos/shutter_ours_rcv07988.mp4", "Source": "supp/effect_comparison_videos/shutter_source_rcv07988.mp4", "VACE": "supp/effect_comparison_videos/shutter_vace_rcv07988.mp4", "CogVideoX": "supp/effect_comparison_videos/shutter_cogvideox_rcv07988.mp4", "GT": "supp/effect_comparison_videos/shutter_gt_rcv07988.mp4"}, "fisheye": {"ours": "supp/effect_comparison_videos/fisheye_ours_2_rcv07988.mp4", "Source": "supp/effect_comparison_videos/fisheye_source_rcv07988.mp4", "VACE": "supp/effect_comparison_videos/fisheye_vace_rcv07988.mp4", "CogVideoX": "supp/effect_comparison_videos/fisheye_cogvideox_rcv07988.mp4", "GT": "supp/effect_comparison_videos/fisheye_gt_2_rcv07988.mp4"}};
+  var eff='bokeh', meth='GT';
+  var box=document.getElementById('cmp1');
+  var base=box.querySelector('.base'), over=box.querySelector('.over');
+  var rlbl=document.getElementById('cmp1r'), handle=box.querySelector('.handle');
+  function load(){
+    base.src=DATA[eff].ours; over.src=DATA[eff][meth]; rlbl.textContent=meth;
+    base.load(); over.load(); base.play().catch(function(){}); over.play().catch(function(){});
+  }
+  document.querySelectorAll('.cmp-tabs [data-eff]').forEach(function(b){
+    b.onclick=function(){document.querySelectorAll('.cmp-tabs [data-eff]').forEach(function(x){x.classList.remove('active')});
+      b.classList.add('active'); eff=b.dataset.eff; load();};
+  });
+  document.querySelectorAll('.cmp-tabs [data-m]').forEach(function(b){
+    b.onclick=function(){document.querySelectorAll('.cmp-tabs [data-m]').forEach(function(x){x.classList.remove('active')});
+      b.classList.add('active'); meth=b.dataset.m; load();};
+  });
+  function setPos(clientX){var r=box.getBoundingClientRect();var p=(clientX-r.left)/r.width*100;
+    p=Math.max(0,Math.min(100,p)); box.style.setProperty('--pos',p+'%');}
+  var drag=false;
+  box.addEventListener('pointerdown',function(e){drag=true;setPos(e.clientX);box.setPointerCapture(e.pointerId);});
+  box.addEventListener('pointermove',function(e){if(drag)setPos(e.clientX);});
+  box.addEventListener('pointerup',function(){drag=false;});
+  box.style.setProperty('--pos','50%');
+  load();
+  // keep every result video looping/muted even if autoplay policy interferes
+  document.querySelectorAll('video').forEach(function(v){v.muted=true;v.play().catch(function(){});});
+})();
+</script>
 </body>
 </html>
