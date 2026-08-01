@@ -7,16 +7,36 @@
   "sample2": {
     "effect": "exposure",
     "label": "EV +3.0",
-    "file": "canon_AutoMode_Scene001_IMG_7970.pth"
+    "file": "canon_AutoMode_Scene002_IMG_7988.pth"
   },
   "sample3": {
     "effect": "exposure",
     "label": "EV +3.0",
-    "file": "canon_AutoMode_Scene001_IMG_7971.pth"
+    "file": "canon_AutoMode_Scene003_IMG_8008.pth"
   },
   "sample4": {
     "effect": "exposure",
     "label": "EV +3.0",
-    "file": "canon_AutoMode_Scene001_IMG_7972.pth"
+    "file": "canon_AutoMode_Scene004_IMG_8035.pth"
+  },
+  "sample5": {
+    "effect": "exposure",
+    "label": "EV +3.0",
+    "file": "canon_AutoMode_Scene005_IMG_8054.pth"
+  },
+  "sample6": {
+    "effect": "exposure",
+    "label": "EV +3.0",
+    "file": "canon_AutoMode_Scene006_IMG_9211.pth"
+  },
+  "sample7": {
+    "effect": "exposure",
+    "label": "EV +3.0",
+    "file": "canon_AutoMode_Scene007_IMG_8094.pth"
+  },
+  "sample8": {
+    "effect": "exposure",
+    "label": "EV +3.0",
+    "file": "canon_AutoMode_Scene008_IMG_8114.pth"
   }
 }

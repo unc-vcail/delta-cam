@@ -18,5 +18,25 @@
     "effect": "bokeh",
     "label": "f/2.0  (K=17.0)",
     "file": "1018_1018_f2.0.pth"
+  },
+  "sample5": {
+    "effect": "bokeh",
+    "label": "f/2.0  (K=17.0)",
+    "file": "1044_1044_f2.0.pth"
+  },
+  "sample6": {
+    "effect": "bokeh",
+    "label": "f/2.0  (K=17.0)",
+    "file": "1033_1033_f2.0.pth"
+  },
+  "sample7": {
+    "effect": "bokeh",
+    "label": "f/2.0  (K=17.0)",
+    "file": "102_102_f2.0.pth"
+  },
+  "sample8": {
+    "effect": "bokeh",
+    "label": "f/2.0  (K=17.0)",
+    "file": "1019_1019_f2.0.pth"
   }
 }
