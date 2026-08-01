@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="DeltaCam: Differential Intrinsic Camera Modeling for Video Generation">
+  <meta name="keywords" content="DeltaCam, video generation, camera control, bokeh, diffusion">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DeltaCam: Differential Intrinsic Camera Modeling for Video Generation</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">DeltaCam: Differential Intrinsic Camera Modeling for Video Generation</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="mailto:debman@cs.unc.edu">Debabrata Mandal</a>,</span>
+            <span class="author-block"><a href="mailto:zp59@unc.edu">Zhihan Peng</a>,</span>
+            <span class="author-block">Yujie Wang,</span>
+            <span class="author-block">Praneeth Chakravarthula</span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">UNC Chapel Hill, USA</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="./static/pdfs/deltacam_paper.pdf" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="./static/pdfs/deltacam_supplementary.pdf" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Supplementary</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/html/2605.25266v1" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="./supp/index.html" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-photo-video"></i></span><span>Full Results Browser</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/unc-vcail/delta-cam" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span><span>Code</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline controls height="100%">
+        <source src="./static/videos/teaser.mp4" type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        DeltaCam adds controllable <b>intrinsic</b> camera behavior — bokeh, exposure, zoom,
+        color temperature, shutter and lens distortion — to video generation, while preserving
+        the original scene dynamics.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Incorporating camera intrinsics into video generation models offers a principled way
+            to control not only scene dynamics but also the imaging process that governs visual
+            appearance. Prior work has primarily focused on extrinsic control, such as camera pose
+            and motion, while treating intrinsic camera parameters as implicit or fixed. A key
+            bottleneck is the lack of large-scale video datasets with accurate and diverse
+            temporally varying camera metadata, which makes learning absolute camera
+            parameterizations difficult. As a result, current models struggle to incorporate
+            photographic camera behavior, including depth-of-field transitions, exposure
+            variations, lens distortions, and color processing, in a controllable and temporally
+            consistent manner.
+          </p>
+          <p>
+            We introduce <b>DeltaCam</b>, a video diffusion framework that models camera behavior
+            through &Delta;-parameterized neural camera adaptors, operating on relative changes in
+            camera motion and intrinsics instead of absolute states. By learning this differential
+            formulation from synthetic video data, we mitigate reliance on precise real-world
+            camera labels and enable smooth, consistent control over imaging factors such as focal
+            length, aperture, ISO, color temperature, and lens distortion. We extend this framework
+            to real-world footage through two mechanisms: finetuning the controls on real
+            image-metadata pairs for precise shot matching, and extracting disentangled embeddings
+            for implicit video-to-video style transfer without requiring explicit camera labels.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Intrinsic Camera Control</h2>
+    <p class="has-text-centered" style="margin-bottom: 1.5rem;">
+      One model controls six camera effects with per-frame parameter trajectories.
+      Left: input video &nbsp;·&nbsp; Right: DeltaCam output.
+    </p>
+    <div class="columns is-multiline">
+      <div class="column is-half">
+        <h3 class="title is-6 has-text-centered">Bokeh (aperture rack)</h3>
+        <div class="columns is-gapless is-mobile">
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/bokeh_source.mp4" type="video/mp4"></video></div>
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/bokeh_ours.mp4" type="video/mp4"></video></div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <h3 class="title is-6 has-text-centered">Exposure</h3>
+        <div class="columns is-gapless is-mobile">
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/exposure_source.mp4" type="video/mp4"></video></div>
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/exposure_ours.mp4" type="video/mp4"></video></div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <h3 class="title is-6 has-text-centered">Optical zoom (25&rarr;100&nbsp;mm)</h3>
+        <div class="columns is-gapless is-mobile">
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/zooming_source.mp4" type="video/mp4"></video></div>
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/zooming_ours.mp4" type="video/mp4"></video></div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <h3 class="title is-6 has-text-centered">Color temperature</h3>
+        <div class="columns is-gapless is-mobile">
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/temperature_source.mp4" type="video/mp4"></video></div>
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/temperature_ours.mp4" type="video/mp4"></video></div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <h3 class="title is-6 has-text-centered">Fisheye distortion</h3>
+        <div class="columns is-gapless is-mobile">
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/fisheye_source.mp4" type="video/mp4"></video></div>
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/fisheye_ours.mp4" type="video/mp4"></video></div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <h3 class="title is-6 has-text-centered">Cinematic shutter (motion blur)</h3>
+        <div class="columns is-gapless is-mobile">
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/shutter_source.mp4" type="video/mp4"></video></div>
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/shutter_ours.mp4" type="video/mp4"></video></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Mixed &amp; Out-of-Distribution Effects</h2>
+    <p class="has-text-centered" style="margin-bottom: 1.5rem;">
+      Effects compose: input (left), Bokeh + Exposure together (middle), and three simultaneous
+      geometric effects never seen together in training — Bokeh + Zoom + Fisheye (right).
+    </p>
+    <div class="columns">
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/mixed_bok_exp_source.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/mixed_bok_exp.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/ood_3effect.mp4" type="video/mp4"></video></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Real Camera Matching</h2>
+    <p class="has-text-centered" style="margin-bottom: 1.5rem;">
+      Fine-tuned on real image&ndash;EXIF pairs, DeltaCam reproduces the look of specific
+      real camera settings.
+    </p>
+    <div class="columns is-multiline">
+      <div class="column is-half">
+        <h3 class="title is-6 has-text-centered">Input &rarr; DSLR f/1.4 bokeh</h3>
+        <div class="columns is-gapless is-mobile">
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/match_bokeh_source.mp4" type="video/mp4"></video></div>
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/match_bokeh_f14.mp4" type="video/mp4"></video></div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <h3 class="title is-6 has-text-centered">Input &rarr; +2 EV exposure</h3>
+        <div class="columns is-gapless is-mobile">
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/match_exposure_source.mp4" type="video/mp4"></video></div>
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/match_exposure.mp4" type="video/mp4"></video></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Video-to-Video Style Transfer</h2>
+    <p class="has-text-centered" style="margin-bottom: 1.5rem;">
+      A disentangled style extractor recovers the camera-parameter trajectory from a reference
+      video (left) and applies it to new content (right) — no explicit camera labels needed.
+    </p>
+    <div class="columns is-multiline">
+      <div class="column is-half">
+        <h3 class="title is-6 has-text-centered">Bokeh style: reference &rarr; transferred</h3>
+        <div class="columns is-gapless is-mobile">
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/style_ref_bokeh.mp4" type="video/mp4"></video></div>
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/style_out_bokeh.mp4" type="video/mp4"></video></div>
+        </div>
+      </div>
+      <div class="column is-half">
+        <h3 class="title is-6 has-text-centered">Exposure style: reference &rarr; transferred</h3>
+        <div class="columns is-gapless is-mobile">
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/style_ref_exposure.mp4" type="video/mp4"></video></div>
+          <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/style_out_exposure.mp4" type="video/mp4"></video></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Optical Zoom vs. Dolly-In</h2>
+    <p class="has-text-centered" style="margin-bottom: 1.5rem;">
+      Intrinsic zoom (left, ours) changes focal length with true perspective compression, unlike
+      extrinsic dolly-forward motion (right, ReCamMaster) which translates the camera.
+    </p>
+    <div class="columns">
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/zoom_ours.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/zoom_recammaster.mp4" type="video/mp4"></video></div>
+    </div>
+    <p class="has-text-centered" style="margin-top: 1.5rem;">
+      Many more results — full extrinsic camera control, applications, and ablations — are in the
+      <a href="./supp/index.html"><b>full results browser</b></a>.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Comparison with Prior Video Models</h2>
+    <p class="has-text-centered" style="margin-bottom: 1.5rem;">
+      The same input and effect are given to each method. DeltaCam applies an explicit per-frame
+      camera-parameter trajectory; the text-driven baselines (CogVideoX, VACE, LTX-Video) receive
+      an effect prompt. Only DeltaCam applies the intrinsic effect while preserving the scene.
+    </p>
+
+    <div class="columns is-mobile has-text-centered" style="margin-bottom: 0;">
+      <div class="column"><b>Input</b></div>
+      <div class="column"><b>DeltaCam (Ours)</b></div>
+      <div class="column"><b>CogVideoX</b></div>
+      <div class="column"><b>VACE</b></div>
+      <div class="column"><b>LTX-Video</b></div>
+    </div>
+
+    <h3 class="title is-6 has-text-centered" style="margin: 0.4rem 0;">Bokeh (aperture rack)</h3>
+    <div class="columns is-mobile is-gapless">
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_bokeh_input.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_bokeh_ours.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_bokeh_cogvideox.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_bokeh_vace.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_bokeh_ltx.mp4" type="video/mp4"></video></div>
+    </div>
+
+    <h3 class="title is-6 has-text-centered" style="margin: 0.4rem 0;">Optical zoom (25&rarr;100&nbsp;mm)</h3>
+    <div class="columns is-mobile is-gapless">
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_zooming_input.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_zooming_ours.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_zooming_cogvideox.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_zooming_vace.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_zooming_ltx.mp4" type="video/mp4"></video></div>
+    </div>
+
+    <h3 class="title is-6 has-text-centered" style="margin: 0.4rem 0;">Color temperature</h3>
+    <div class="columns is-mobile is-gapless">
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_temperature_input.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_temperature_ours.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_temperature_cogvideox.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_temperature_vace.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_temperature_ltx.mp4" type="video/mp4"></video></div>
+    </div>
+
+    <h3 class="title is-6 has-text-centered" style="margin: 0.4rem 0;">Fisheye distortion</h3>
+    <div class="columns is-mobile is-gapless">
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_fisheye_input.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_fisheye_ours.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_fisheye_cogvideox.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_fisheye_vace.mp4" type="video/mp4"></video></div>
+      <div class="column"><video autoplay muted loop playsinline width="100%"><source src="./static/videos/cmp_fisheye_ltx.mp4" type="video/mp4"></video></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="acknowledgements">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Acknowledgements</h2>
+    <p>
+      We thank <b>Kunal Tyagi</b>, <b>Karthik Mohan Kumar</b>, and <b>Rama Harihara</b>
+      from AMD for helpful discussions and their support during the early stages of
+      this project.
+    </p>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{deltacam2026,
+  author  = {Mandal, Debabrata and Peng, Zhihan and Wang, Yujie and Chakravarthula, Praneeth},
+  title   = {DeltaCam: Differential Intrinsic Camera Modeling for Video Generation},
+  journal = {Under review},
+  year    = {2026},
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+        Page template borrowed from <a href="https://nerfies.github.io">Nerfies</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

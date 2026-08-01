@@ -1,0 +1,17 @@
+{
+  "sample_id": "ood_022_zoo_fis_shu",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/DL3DV-10K/8K/1dcf49d142ee6d3856e731c89b9ddca26521514a9f698341e00e7697bab31e85_0.mp4",
+  "effects": [
+    "Zooming",
+    "Fisheye",
+    "Shutter"
+  ],
+  "keyframes": [
+    "0:100.0,80:25.0",
+    null,
+    null
+  ],
+  "seed": 1020,
+  "steps": 50,
+  "ood": true
+}

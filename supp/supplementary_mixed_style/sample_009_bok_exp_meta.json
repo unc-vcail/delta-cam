@@ -1,0 +1,14 @@
+{
+  "sample_id": "sample_009_bok_exp",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/RealEstate10K/train/yFQizPwmo00/6262d7d23b49f6c8.mp4",
+  "effects": [
+    "Bokeh",
+    "Exposure"
+  ],
+  "keyframes": [
+    "0:20.0,40:10.0,80:2.0",
+    "0:2.0,40:0.0,80:-2.0"
+  ],
+  "seed": 785,
+  "steps": 50
+}

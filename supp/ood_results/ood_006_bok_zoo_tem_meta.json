@@ -1,0 +1,17 @@
+{
+  "sample_id": "ood_006_bok_zoo_tem",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/RealEstate10K/train/yPshI9ASy9E/8772de948d685f01.mp4",
+  "effects": [
+    "Bokeh",
+    "Zooming",
+    "Temperature"
+  ],
+  "keyframes": [
+    "0:2.0,40:14.0,80:2.0",
+    "0:50.0,80:100.0",
+    "0:6500,80:3000"
+  ],
+  "seed": 1004,
+  "steps": 50,
+  "ood": true
+}

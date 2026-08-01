@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supplementary Material</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f2f5;color:#1a1a2e;line-height:1.5}
+#sidebar{position:fixed;top:0;left:0;width:230px;height:100vh;background:#1e1e2e;color:#cdd6f4;overflow-y:auto;padding:0 0 24px;z-index:100;display:flex;flex-direction:column}
+.sidebar-hdr{padding:18px 16px 10px;font-size:15px;font-weight:700;color:#89b4fa;border-bottom:1px solid #313244;letter-spacing:.02em}
+#sidebar a{display:block;padding:7px 16px;font-size:12.5px;color:#a6adc8;text-decoration:none;border-left:3px solid transparent;transition:.12s;line-height:1.4}
+#sidebar a:hover{background:rgba(137,180,250,.08);color:#cdd6f4;border-left-color:#585b70}
+#sidebar a.active{background:rgba(137,180,250,.12);color:#89b4fa;border-left-color:#89b4fa}
+#content{margin-left:230px;padding:28px 28px 60px;max-width:1700px}
+.section{background:#fff;border-radius:10px;padding:22px 24px 28px;margin-bottom:36px;box-shadow:0 1px 5px rgba(0,0,0,.07)}
+.section>h2{font-size:1.18rem;font-weight:700;margin-bottom:5px;color:#1e1e2e}
+.section>.desc{color:#555;font-size:.875rem;margin-bottom:18px;max-width:860px}
+.tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:16px;border-bottom:2px solid #e5e7eb;padding-bottom:0}
+.tab-btn{padding:6px 13px;border:none;background:none;border-radius:6px 6px 0 0;cursor:pointer;font-size:12.5px;color:#666;transition:.12s;font-weight:500;border-bottom:2px solid transparent;margin-bottom:-2px}
+.tab-btn:hover{color:#3b82f6;background:#eff6ff}
+.tab-btn.active{color:#3b82f6;border-bottom-color:#3b82f6;font-weight:700}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.sample-row{display:flex;flex-wrap:wrap;gap:8px;padding:10px 12px;background:#f8f9fa;border-radius:8px;margin-bottom:8px;align-items:flex-start}
+.sample-lbl{font-size:10.5px;color:#888;width:100%;margin-bottom:2px;font-weight:600;letter-spacing:.03em;text-transform:uppercase}
+.vcell{display:flex;flex-direction:column;align-items:center;gap:4px}
+.vcell>span,.vcell>b{font-size:10.5px;color:#444;font-weight:700;text-transform:uppercase;letter-spacing:.05em;text-align:center}
+.vcell video{border-radius:5px;background:#000;display:block}
+.vcell img{border-radius:5px;display:block;max-width:100%}
+.img-grid{display:flex;flex-wrap:wrap;gap:14px}
+.img-item{display:flex;flex-direction:column;align-items:center;gap:5px}
+.img-item>span{font-size:11px;color:#555;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.img-item img{border-radius:6px;max-width:300px;display:block}
+.cam-traj{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding:10px 12px;background:#f0f4ff;border-radius:8px;border:1px solid #d0deff}
+.cam-traj img{border-radius:6px;max-width:280px}
+.cam-traj p{font-size:12.5px;color:#3b4e8a;max-width:300px}
+@media(max-width:860px){#sidebar{display:none}#content{margin-left:0}}
+</style>
+</head>
+<body>
+
+<nav id="sidebar">
+  <div class="sidebar-hdr">Supplementary Material</div>
+  <a href="#main-comparison">1. Main Comparison</a>
+  <a href="#comparison-3">2. Comparison Set 2</a>
+  <a href="#zoom-comparison">3. Zoom vs. ReCamMaster</a>
+  <a href="#ood-results">4. OOD 3-Effect Results</a>
+  <a href="#supp-mixed">5. Mixed Effect Results</a>
+  <a href="#style-transfer">6. Style Transfer</a>
+  <a href="#cam-control">7. Full Camera Control</a>
+  <a href="#bokeh-matching">8. Bokeh Matching (In-the-Wild)</a>
+  <a href="#exposure-matching">9. Exposure Matching (In-the-Wild)</a>
+  <a href="#applications">10. Applications</a>
+  <a href="#matcher-validation">11. Matcher Validation (vs GT)</a>
+  <a href="#cinematic">12. Cinematic Effects</a>
+</nav>
+
+<main id="content"></main>
+
+<script>
+'use strict';
+
+// ── Utilities ──────────────────────────────────────────────────────────────
+
+function el(tag, cls, html) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (html !== undefined) e.innerHTML = html;
+  return e;
+}
+
+function mkVideo(src, w) {
+  const v = document.createElement('video');
+  v.muted = true; v.loop = true; v.playsInline = true;
+  v.setAttribute('preload', 'none');
+  v.dataset.src = src;
+  v.style.width = w + 'px';
+  return v;
+}
+
+function mkImg(src, maxW) {
+  const i = document.createElement('img');
+  i.dataset.src = src;
+  i.loading = 'lazy';
+  if (maxW) i.style.maxWidth = maxW + 'px';
+  return i;
+}
+
+// Lazy loader
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    if (el.dataset.src && !el.src) {
+      el.src = el.dataset.src;
+      if (el.tagName === 'VIDEO') el.play().catch(() => {});
+    }
+    observer.unobserve(el);
+  });
+}, { rootMargin: '400px' });
+
+function observe(container) {
+  container.querySelectorAll('video[data-src], img[data-src]').forEach(e => observer.observe(e));
+}
+
+// Tab system
+function makeTabs(groupId, tabs, buildPanel) {
+  const wrap = el('div');
+  const bar = el('div', 'tabs');
+  tabs.forEach((t, i) => {
+    const btn = el('button', 'tab-btn' + (i === 0 ? ' active' : ''), t.label);
+    btn.dataset.group = groupId; btn.dataset.target = t.id;
+    btn.onclick = () => switchTab(btn, groupId, t.id);
+    bar.appendChild(btn);
+    const panel = el('div', 'tab-panel' + (i === 0 ? ' active' : ''));
+    panel.dataset.group = groupId; panel.dataset.id = t.id;
+    buildPanel(panel, t);
+    wrap.appendChild(panel);
+  });
+  wrap.insertBefore(bar, wrap.firstChild);
+  return wrap;
+}
+
+function switchTab(btn, group, target) {
+  const sec = btn.closest('.section');
+  sec.querySelectorAll(`.tab-btn[data-group="${group}"]`).forEach(b => b.classList.remove('active'));
+  sec.querySelectorAll(`.tab-panel[data-group="${group}"]`).forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  const panel = sec.querySelector(`.tab-panel[data-group="${group}"][data-id="${target}"]`);
+  panel.classList.add('active');
+  observe(panel);
+}
+
+function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+const MLABELS = {
+  source: 'Source', ours: 'Ours', gt: 'GT',
+  vace: 'VACE', cogvideox: 'CogVideoX', ltx: 'LTX-Video',
+  'ours_2': 'Ours', 'gt_2': 'GT',
+  old_model: 'Before Matching', new_model: 'After Matching',
+  generated: 'Ours',
+};
+
+function vw(n) { return n >= 5 ? 200 : n === 4 ? 230 : n === 3 ? 270 : 340; }
+
+function buildRow(row, sampleLabel, cols) {
+  if (sampleLabel) {
+    const lbl = el('span', 'sample-lbl', sampleLabel);
+    row.appendChild(lbl);
+  }
+  const w = vw(cols.filter(c => c.src.endsWith('.mp4')).length);
+  cols.forEach(c => {
+    const cell = el('div', 'vcell');
+    const lb = el('b', '', MLABELS[c.method] || c.method);
+    cell.appendChild(lb);
+    if (c.src.endsWith('.mp4')) {
+      cell.appendChild(mkVideo(c.src, w));
+    } else {
+      const img = mkImg(c.src, w + 20);
+      cell.appendChild(img);
+    }
+    row.appendChild(cell);
+  });
+  return row;
+}
+
+function addSection(id, title, desc, buildFn) {
+  const sec = el('section', 'section');
+  sec.id = id;
+  sec.appendChild(el('h2', '', title));
+  sec.appendChild(el('p', 'desc', desc));
+  buildFn(sec);
+  document.getElementById('content').appendChild(sec);
+  observe(sec);
+}
+
+// ── Effect name display ────────────────────────────────────────────────────
+
+const ENAMES = {
+  bokeh: 'Bokeh', exposure: 'Exposure', temperature: 'Temperature',
+  zooming: 'Zooming', shutter: 'Shutter', fisheye: 'Fisheye',
+};
+
+const EFFECTS = ['bokeh','exposure','temperature','zooming','shutter','fisheye'];
+
+// ══════════════════════════════════════════════════════════════════════════════
+// 1. Main Comparison
+// ══════════════════════════════════════════════════════════════════════════════
+
+const MAIN_COMP = {
+  bokeh:       {ids:['000','rcv07988','rcv10501','rcv33529'],        methods:['source','ours','vace','cogvideox','gt']},
+  exposure:    {ids:['003','rcv07988','rcv10501','rcv33529'],        methods:['source','ours','vace','cogvideox','gt']},
+  temperature: {ids:['002','rcv07988','rcv10501','rcv33529'],        methods:['source','ours','vace','cogvideox','gt']},
+  zooming:     {ids:['000','rcv07988','rcv10501','rcv33529'],        methods:['source','ours','vace','cogvideox','gt']},
+  shutter:     {ids:['005','rcv07988','rcv10501','rcv26828','rcv33529'], methods:['source','ours','vace','cogvideox','gt']},
+  fisheye:     {ids:['001','rcv07988','rcv10501','rcv33529'],        methods:['source','ours_2','vace','cogvideox','gt_2']},
+};
+
+addSection('main-comparison', '1. Main Comparison',
+  'Our method vs. VACE and CogVideoX across all six camera effects. GT is physics-rendered ground truth.',
+  sec => {
+    const tabs = EFFECTS.map(e => ({id:e, label:ENAMES[e]}));
+    sec.appendChild(makeTabs('mc', tabs, (panel, t) => {
+      const d = MAIN_COMP[t.id];
+      d.ids.forEach(id => {
+        const row = el('div', 'sample-row');
+        buildRow(row, `Video ${id}`, d.methods.map(m => ({
+          method: m,
+          src: `effect_comparison_videos/${t.id}_${m}_${id}.mp4`
+        })));
+        panel.appendChild(row);
+      });
+    }));
+  }
+);
+
+// ══════════════════════════════════════════════════════════════════════════════
+// 2. Comparison Set 2
+// ══════════════════════════════════════════════════════════════════════════════
+
+const COMP3_IDS = {
+  bokeh:       ['rcv88405'],
+  exposure:    ['rcv16854'],
+  fisheye:     ['rcv18035'],
+  shutter:     ['rcv29720'],
+  temperature: ['rcv64510'],
+  zooming:     ['rcv34654'],
+};
+const COMP3_METHODS = ['source','ours','vace','cogvideox','ltx','gt'];
+
+addSection('comparison-3', '2. Comparison Set 2',
+  'Additional comparisons with different source videos. All five methods shown.',
+  sec => {
+    const tabs = EFFECTS.map(e => ({id:e, label:ENAMES[e]}));
+    sec.appendChild(makeTabs('c3', tabs, (panel, t) => {
+      COMP3_IDS[t.id].forEach(id => {
+        const row = el('div', 'sample-row');
+        buildRow(row, `Video ${id}`, COMP3_METHODS.map(m => ({
+          method: m,
+          src: `comparison_videos3/${t.id}_${m}_${id}.mp4`
+        })));
+        panel.appendChild(row);
+      });
+    }));
+  }
+);
+
+// ══════════════════════════════════════════════════════════════════════════════
+// 3. Zoom vs. ReCamMaster
+// ══════════════════════════════════════════════════════════════════════════════
+
+const ZOOM_IDS = ['04868113','16172923','52fa3eb4','61309838','82371cb0','b2a9a89b','b9c9afb0','efaa7157','fd3b7587'];
+
+addSection('zoom-comparison', '3. Zoom vs. ReCamMaster',
+  'Our focal-length zoom effect (25→100mm) compared against ReCamMaster\'s dolly-forward approach. Source, Ours, ReCamMaster, and physics-rendered GT shown per video.',
+  sec => {
+    ZOOM_IDS.forEach(id => {
+      const row = el('div', 'sample-row');
+      buildRow(row, `Video ${id}`, [
+        {method:'source',      src:`zoom_comparison/${id}_ours_source.mp4`},
+        {method:'ours',        src:`zoom_comparison/${id}_ours.mp4`},
+        {method:'ReCamMaster', src:`zoom_comparison/${id}_recammaster.mp4`},
+        {method:'gt',          src:`zoom_comparison/${id}_ours_gt.mp4`},
+      ]);
+      sec.appendChild(row);
+    });
+  }
+);
+
+// ══════════════════════════════════════════════════════════════════════════════
+// 4. OOD 3-Effect Results
+// ══════════════════════════════════════════════════════════════════════════════
+
+const OOD = [
+  {tabId:'bok_zoo_fis', label:'Bok+Zoo+Fis', ids:['001_bok_zoo_fis','002_bok_zoo_fis','003_bok_zoo_fis']},
+  {tabId:'bok_zoo_tem', label:'Bok+Zoo+Tem', ids:['004_bok_zoo_tem','005_bok_zoo_tem','006_bok_zoo_tem']},
+  {tabId:'bok_fis_tem', label:'Bok+Fis+Tem', ids:['007_bok_fis_tem','008_bok_fis_tem']},
+  {tabId:'zoo_fis_tem', label:'Zoo+Fis+Tem', ids:['009_zoo_fis_tem','010_zoo_fis_tem']},
+  {tabId:'bok_zoo_exp', label:'Bok+Zoo+Exp', ids:['011_bok_zoo_exp','012_bok_zoo_exp']},
+  {tabId:'bok_fis_exp', label:'Bok+Fis+Exp', ids:['013_bok_fis_exp','014_bok_fis_exp']},
+  {tabId:'zoo_fis_exp', label:'Zoo+Fis+Exp', ids:['015_zoo_fis_exp','016_zoo_fis_exp']},
+  {tabId:'bok_zoo_shu', label:'Bok+Zoo+Shu', ids:['017_bok_zoo_shu','018_bok_zoo_shu']},
+  {tabId:'bok_fis_shu', label:'Bok+Fis+Shu', ids:['019_bok_fis_shu','020_bok_fis_shu']},
+  {tabId:'zoo_fis_shu', label:'Zoo+Fis+Shu', ids:['021_zoo_fis_shu','022_zoo_fis_shu']},
+];
+
+addSection('ood-results', '4. Out-of-Distribution 3-Effect Results',
+  'Our model applied to three simultaneous effects including at least two geometric effects — combinations not seen during training. Source / Ours / GT / Trajectory plot per sample.',
+  sec => {
+    const tabs = OOD.map(o => ({id:o.tabId, label:o.label}));
+    sec.appendChild(makeTabs('ood', tabs, (panel, t) => {
+      const combo = OOD.find(o => o.tabId === t.id);
+      combo.ids.forEach(id => {
+        const row = el('div', 'sample-row');
+        buildRow(row, `Sample ${id}`, [
+          {method:'source',    src:`ood_results/ood_${id}_source.mp4`},
+          {method:'generated', src:`ood_results/ood_${id}_generated.mp4`},
+          {method:'gt',        src:`ood_results/ood_${id}_gt.mp4`},
+          {method:'Params',    src:`ood_results/ood_${id}_params.png`},
+        ]);
+        panel.appendChild(row);
+      });
+    }));
+  }
+);
+
+// ══════════════════════════════════════════════════════════════════════════════
+// 5. Mixed Effect Results
+// ══════════════════════════════════════════════════════════════════════════════
+
+const SUPP_MIXED = [
+  {id:'001_bok_exp',  label:'Bokeh + Exposure'},
+  {id:'002_bok_tem',  label:'Bokeh + Temperature'},
+  {id:'003_fis_tem',  label:'Fisheye + Temperature'},
+  {id:'004_fis_exp',  label:'Fisheye + Exposure'},
+  {id:'005_zoo_tem',  label:'Zooming + Temperature'},
+  {id:'006_zoo_exp',  label:'Zooming + Exposure'},
+  {id:'007_shu_tem',  label:'Shutter + Temperature'},
+  {id:'008_shu_bok',  label:'Shutter + Bokeh'},
+  {id:'009_bok_exp',  label:'Bokeh + Exposure (v2)'},
+  {id:'010_tem_zoo',  label:'Temperature + Zooming'},
+  {id:'011_fis_exp',  label:'Fisheye + Exposure (v2)'},
+  {id:'012_bok_tem',  label:'Bokeh + Temperature (v2)'},
+  {id:'013_zoo_tem',  label:'Zooming + Temperature (v2)'},
+  {id:'014_shu_bok',  label:'Shutter + Bokeh (v2)'},
+  {id:'015_fis_tem',  label:'Fisheye + Temperature (v2)'},
+];
+
+addSection('supp-mixed', '5. Mixed Effect Results',
+  '15 diverse two-effect combination samples on RealCam-Vid test videos. Source / Ours / GT / Trajectory plot per sample.',
+  sec => {
+    SUPP_MIXED.forEach(s => {
+      const row = el('div', 'sample-row');
+      buildRow(row, s.label, [
+        {method:'source',    src:`supplementary_mixed_style/sample_${s.id}_source.mp4`},
+        {method:'generated', src:`supplementary_mixed_style/sample_${s.id}_generated.mp4`},
+        {method:'gt',        src:`supplementary_mixed_style/sample_${s.id}_gt.mp4`},
+        {method:'Params',    src:`supplementary_mixed_style/sample_${s.id}_params.png`},
+      ]);
+      sec.appendChild(row);
+    });
+  }
+);
+
+// ══════════════════════════════════════════════════════════════════════════════
+// 6. Style Transfer
+// ══════════════════════════════════════════════════════════════════════════════
+
+addSection('style-transfer', '6. Camera Style Transfer',
+  'Camera style extracted from Video A and transferred onto Video B. Showing Video A (GT) and Video B (Transferred) per pair and effect.',
+  sec => {
+    const pairs = ['pair0','pair1','pair2','pair3','pair4','pair5'];
+    const tabs = EFFECTS.map(e => ({id:e, label:ENAMES[e]}));
+    sec.appendChild(makeTabs('st', tabs, (panel, t) => {
+      pairs.forEach((p, i) => {
+        const agt = `style_transfer_results_supp/${p}_${t.id}_a_gt.mp4`;
+        const btr = `style_transfer_results_supp/${p}_${t.id}_b_transferred.mp4`;
+        const row = el('div', 'sample-row');
+        buildRow(row, `Pair ${i}`, [
+          {method:'a_gt',          src: agt},
+          {method:'b_transferred', src: btr},
+        ]);
+        panel.appendChild(row);
+      });
+    }));
+  }
+);
+
+// ══════════════════════════════════════════════════════════════════════════════
+// 7. Full Camera Control
+// ══════════════════════════════════════════════════════════════════════════════
+
+addSection('cam-control', '7. Full Camera Control',
+  'Our model conditioned on real extrinsic camera trajectories (pan, tilt, dolly, etc.) across diverse source videos. Camera trajectory 3D plot shown per type, followed by Source / Ours / GT per video.',
+  sec => {
+    const camTabs = [1,2,3,4,5].map(n => ({id:String(n), label:`Type ${n}`}));
+    sec.appendChild(makeTabs('cc', camTabs, (panel, t) => {
+      const n = t.id;
+      const trajWrap = el('div', 'cam-traj');
+      const timg = mkImg(`full_cam_control/cam_type_${n}/camera_trajectory.png`, 280);
+      const tdesc = el('p', '', `3D camera trajectory for Type ${n}. Color indicates temporal progression (blue → red).`);
+      trajWrap.appendChild(timg);
+      trajWrap.appendChild(tdesc);
+      panel.appendChild(trajWrap);
+
+      for (let v = 0; v < 5; v++) {
+        const base = `full_cam_control/cam_type_${n}/video${v}`;
+        const row = el('div', 'sample-row');
+        buildRow(row, `Video ${v}`, [
+          {method:'source', src:`${base}/output_source.mp4`},
+          {method:'ours',   src:`${base}/output.mp4`},
+          {method:'gt',     src:`${base}/output_gt.mp4`},
+          {method:'Traj',   src:`${base}/output_traj_plot.png`},
+        ]);
+        panel.appendChild(row);
+      }
+    }));
+  }
+);
+
+// ══════════════════════════════════════════════════════════════════════════════
+// 8. Real Bokeh Matching
+// ══════════════════════════════════════════════════════════════════════════════
+
+addSection('bokeh-matching', '8. Bokeh Matching — In-the-Wild Adaptation',
+  'Before vs. after camera-matching fine-tuning applied to real in-the-wild bokeh videos (no ground-truth reference). For GT-validated accuracy on paired examples, see §11.',
+  sec => {
+    const apRows = [
+      {id:'ap_f1p4',  label:'f/1.4'},
+      {id:'ap_f2p0',  label:'f/2.0'},
+      {id:'ap_f2p8',  label:'f/2.8'},
+      {id:'ap_f5p6',  label:'f/5.6'},
+      {id:'ap_f11p0', label:'f/11.0'},
+    ];
+    const focusRows = [
+      {id:'focus_010', label:'Focus 0.10'},
+      {id:'focus_025', label:'Focus 0.25'},
+      {id:'focus_040', label:'Focus 0.40'},
+      {id:'focus_065', label:'Focus 0.65'},
+      {id:'focus_085', label:'Focus 0.85'},
+    ];
+    const tabs = [
+      {id:'aperture', label:'Aperture Sweep'},
+      {id:'focus',    label:'Focus Sweep'},
+    ];
+    sec.appendChild(makeTabs('bm', tabs, (panel, t) => {
+      const rows = t.id === 'aperture' ? apRows : focusRows;
+      rows.forEach(r => {
+        const row = el('div', 'sample-row');
+        buildRow(row, r.label, [
+          {method:'old_model', src:`bokeh_match_results_realbokeh/${r.id}_old_model.mp4`},
+          {method:'new_model', src:`bokeh_match_results_realbokeh/${r.id}_new_model.mp4`},
+        ]);
+        panel.appendChild(row);
+      });
+    }));
+  }
+);
+
+// ══════════════════════════════════════════════════════════════════════════════
+// 9. Real Exposure Matching
+// ══════════════════════════════════════════════════════════════════════════════
+
+addSection('exposure-matching', '9. Exposure Matching — In-the-Wild Adaptation',
+  'Before vs. after camera-matching fine-tuning applied to real in-the-wild exposure videos (no ground-truth reference). 2 EV and 3 EV steps. For GT-validated accuracy, see §11.',
+  sec => {
+    const evTabs = [
+      {id:'ev2', label:'2 EV'},
+      {id:'ev3', label:'3 EV'},
+    ];
+    sec.appendChild(makeTabs('em', evTabs, (panel, t) => {
+      const evDir = t.id === 'ev2' ? '2ev' : '3ev';
+      ['pair1','pair2','pair3'].forEach(p => {
+        const row = el('div', 'sample-row');
+        buildRow(row, p, [
+          {method:'old_model', src:`exposure_match_results/${evDir}/${p}/old_model.mp4`},
+          {method:'new_model', src:`exposure_match_results/${evDir}/${p}/new_model.mp4`},
+        ]);
+        panel.appendChild(row);
+      });
+    }));
+  }
+);
+
+// ══════════════════════════════════════════════════════════════════════════════
+// 10. Applications
+// ══════════════════════════════════════════════════════════════════════════════
+
+const APPS = [
+  {id:'bokeh_deblur',        label:'Bokeh Deblur'},
+  {id:'exposure_correct',    label:'Exposure Correction'},
+  {id:'temperature_reverse', label:'Temperature Reversal'},
+  {id:'zoom_out',            label:'Zoom Out'},
+];
+
+addSection('applications', '10. Applications',
+  'Successful application demos. Input video (source) is fed to our model; output is compared against physics-rendered GT.',
+  sec => {
+    APPS.forEach(a => {
+      const row = el('div', 'sample-row');
+      buildRow(row, a.label, [
+        {method:'Input', src:`applications/${a.id}_source.mp4`},
+        {method:'ours',  src:`applications/${a.id}.mp4`},
+        {method:'gt',    src:`applications/${a.id}_gt.mp4`},
+      ]);
+      sec.appendChild(row);
+    });
+  }
+);
+
+// ══════════════════════════════════════════════════════════════════════════════
+// 11. Matcher Validation (vs. Ground Truth)
+// ══════════════════════════════════════════════════════════════════════════════
+
+addSection('matcher-validation', '11. Matcher Validation — vs. Ground Truth',
+  'Unlike the in-the-wild matching in §8–9 (which has no reference), these use real paired examples that carry a physical ground-truth target, so the matcher’s accuracy can be judged directly: source → our matcher output → real GT. Bokeh examples use wide apertures (clearly visible blur); exposure examples use large EV steps.',
+  sec => {
+    const tabs = [{id:'bokeh', label:'Bokeh'}, {id:'exposure', label:'Exposure'}];
+    sec.appendChild(makeTabs('mv', tabs, (panel, t) => {
+      ['sample1','sample2','sample3'].forEach((s, i) => {
+        const row = el('div', 'sample-row');
+        buildRow(row, `Sample ${i+1}`, [
+          {method:'source', src:`matcher_validation/${t.id}/${s}_source.mp4`},
+          {method:'ours',   src:`matcher_validation/${t.id}/${s}_output.mp4`},
+          {method:'gt',     src:`matcher_validation/${t.id}/${s}_gt.mp4`},
+        ]);
+        panel.appendChild(row);
+      });
+    }));
+  }
+);
+
+// ══════════════════════════════════════════════════════════════════════════════
+// 12. Cinematic Effects
+// ══════════════════════════════════════════════════════════════════════════════
+
+const CINE = [
+  {id:'dolly',   label:'Dolly Zoom (Vertigo)',        n:4},
+  {id:'dark',    label:'Dark-Scene Brightening',      n:3},
+  {id:'fisheye', label:'Fisheye + Zoom-Out (OOD)',    n:4},
+  {id:'shutter', label:'Cinematic Shutter',           n:4},
+];
+
+addSection('cinematic', '12. Cinematic Effects',
+  'Cinematic camera looks composed from our controls: a dolly-zoom (optical zoom paired with a real forward camera dolly), dark-scene brightening, a wide fisheye zoom-out (an out-of-distribution same-group combo), and long-exposure cinematic shutter on fast footage. Left: source — Right: our output.',
+  sec => {
+    const tabs = CINE.map(c => ({id:c.id, label:c.label}));
+    sec.appendChild(makeTabs('cine', tabs, (panel, t) => {
+      const c = CINE.find(x => x.id === t.id);
+      for (let i = 1; i <= c.n; i++) {
+        const row = el('div', 'sample-row');
+        buildRow(row, `Sample ${i}`, [
+          {method:'source', src:`cinematic/${t.id}/sample${i}_source.mp4`},
+          {method:'ours',   src:`cinematic/${t.id}/sample${i}_output.mp4`},
+        ]);
+        panel.appendChild(row);
+      }
+    }));
+  }
+);
+
+// ── Sidebar active state on scroll ──────────────────────────────────────────
+
+const sideLinks = document.querySelectorAll('#sidebar a');
+const sectionEls = [...document.querySelectorAll('.section')];
+
+function updateActive() {
+  let cur = sectionEls[0].id;
+  sectionEls.forEach(s => {
+    if (s.getBoundingClientRect().top <= 120) cur = s.id;
+  });
+  sideLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
+  });
+}
+
+window.addEventListener('scroll', updateActive, {passive:true});
+updateActive();
+</script>
+</body>
+</html>

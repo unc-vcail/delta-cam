@@ -1,0 +1,14 @@
+{
+  "sample_id": "sample_007_shu_tem",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/DL3DV-10K/6K/caeadb022afca18cd391660487b132c89c798e2d445bdfb5526fb0a1d46438ec_1.mp4",
+  "effects": [
+    "Shutter",
+    "Temperature"
+  ],
+  "keyframes": [
+    null,
+    "0:9000,80:3000"
+  ],
+  "seed": 783,
+  "steps": 50
+}

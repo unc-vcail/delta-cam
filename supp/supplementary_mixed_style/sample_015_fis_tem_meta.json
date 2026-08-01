@@ -1,0 +1,14 @@
+{
+  "sample_id": "sample_015_fis_tem",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/MiraData9K/000000042/000000042758.0.014.mp4",
+  "effects": [
+    "Fisheye",
+    "Temperature"
+  ],
+  "keyframes": [
+    null,
+    "0:9000,80:3000"
+  ],
+  "seed": 791,
+  "steps": 50
+}

@@ -1,0 +1,17 @@
+{
+  "sample_id": "ood_020_bok_fis_shu",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/MiraData9K/000000324/000000324730.19.010.mp4",
+  "effects": [
+    "Bokeh",
+    "Fisheye",
+    "Shutter"
+  ],
+  "keyframes": [
+    "0:20.0,80:3.0",
+    null,
+    null
+  ],
+  "seed": 1018,
+  "steps": 50,
+  "ood": true
+}

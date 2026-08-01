@@ -1,0 +1,14 @@
+{
+  "sample_id": "sample_011_fis_exp",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/MiraData9K/000000001/000000001008.15.004.mp4",
+  "effects": [
+    "Fisheye",
+    "Exposure"
+  ],
+  "keyframes": [
+    null,
+    "0:2.0,40:0.0,80:-2.0"
+  ],
+  "seed": 787,
+  "steps": 50
+}

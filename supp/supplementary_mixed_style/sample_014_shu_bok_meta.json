@@ -1,0 +1,14 @@
+{
+  "sample_id": "sample_014_shu_bok",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/RealEstate10K/train/fxLkoQq7A3E/3e456de0b8fc7e2c.mp4",
+  "effects": [
+    "Shutter",
+    "Bokeh"
+  ],
+  "keyframes": [
+    null,
+    "0:3.0,40:12.0,80:22.0"
+  ],
+  "seed": 790,
+  "steps": 50
+}

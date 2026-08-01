@@ -1,0 +1,14 @@
+{
+  "sample_id": "sample_001_bok_exp",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/DL3DV-10K/10K/ce25b5b7e691ab354dac01146e06a90f47ec030c7610e2c3dc375ac497e7422d_2.mp4",
+  "effects": [
+    "Bokeh",
+    "Exposure"
+  ],
+  "keyframes": [
+    "0:2.0,40:10.0,80:20.0",
+    "0:-2.0,40:0.0,80:2.0"
+  ],
+  "seed": 777,
+  "steps": 50
+}

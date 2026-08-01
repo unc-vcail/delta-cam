@@ -1,0 +1,14 @@
+{
+  "sample_id": "sample_012_bok_tem",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/MiraData9K/000001317/000001317966.3.004.mp4",
+  "effects": [
+    "Bokeh",
+    "Temperature"
+  ],
+  "keyframes": [
+    "0:5.0,40:15.0,80:5.0",
+    "0:6500,40:3000,80:6500"
+  ],
+  "seed": 788,
+  "steps": 50
+}

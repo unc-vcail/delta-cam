@@ -1,0 +1,14 @@
+{
+  "sample_id": "sample_004_fis_exp",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/RealEstate10K/train/eXfkGw1HP1M/10451da41760e4cd.mp4",
+  "effects": [
+    "Fisheye",
+    "Exposure"
+  ],
+  "keyframes": [
+    null,
+    "0:-1.5,40:0.0,80:1.5"
+  ],
+  "seed": 780,
+  "steps": 50
+}

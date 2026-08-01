@@ -1,0 +1,17 @@
+{
+  "sample_id": "ood_010_zoo_fis_tem",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/RealEstate10K/train/isG1lz0dKZo/732acd98ac4197e6.mp4",
+  "effects": [
+    "Zooming",
+    "Fisheye",
+    "Temperature"
+  ],
+  "keyframes": [
+    "0:100.0,80:25.0",
+    null,
+    "0:9000,80:3000"
+  ],
+  "seed": 1008,
+  "steps": 50,
+  "ood": true
+}

@@ -1,0 +1,17 @@
+{
+  "sample1": {
+    "effect": "exposure",
+    "label": "EV +3.0",
+    "file": "canon_AutoMode_Scene001_IMG_7967.pth"
+  },
+  "sample2": {
+    "effect": "exposure",
+    "label": "EV +3.0",
+    "file": "canon_AutoMode_Scene001_IMG_7970.pth"
+  },
+  "sample3": {
+    "effect": "exposure",
+    "label": "EV +3.0",
+    "file": "canon_AutoMode_Scene001_IMG_7971.pth"
+  }
+}

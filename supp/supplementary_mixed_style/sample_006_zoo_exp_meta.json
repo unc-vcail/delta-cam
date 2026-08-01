@@ -1,0 +1,14 @@
+{
+  "sample_id": "sample_006_zoo_exp",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/MiraData9K/000001332/000001332523.31.013.mp4",
+  "effects": [
+    "Zooming",
+    "Exposure"
+  ],
+  "keyframes": [
+    "0:25.0,80:100.0",
+    "0:-2.0,80:1.5"
+  ],
+  "seed": 782,
+  "steps": 50
+}

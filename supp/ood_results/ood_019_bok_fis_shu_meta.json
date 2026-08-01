@@ -1,0 +1,17 @@
+{
+  "sample_id": "ood_019_bok_fis_shu",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/DL3DV-10K/6K/cb6d17e716cb7c23c896c8e2be793c97cc4c2c0a8882f59c3dbdf5f93a9ce7c0_2.mp4",
+  "effects": [
+    "Bokeh",
+    "Fisheye",
+    "Shutter"
+  ],
+  "keyframes": [
+    "0:2.0,80:20.0",
+    null,
+    null
+  ],
+  "seed": 1017,
+  "steps": 50,
+  "ood": true
+}

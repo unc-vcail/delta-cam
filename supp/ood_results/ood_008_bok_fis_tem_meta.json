@@ -1,0 +1,17 @@
+{
+  "sample_id": "ood_008_bok_fis_tem",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/RealEstate10K/train/vAY0uYpiTG4/6487b73983851b5d.mp4",
+  "effects": [
+    "Bokeh",
+    "Fisheye",
+    "Temperature"
+  ],
+  "keyframes": [
+    "0:18.0,80:3.0",
+    null,
+    "0:8000,80:3000"
+  ],
+  "seed": 1006,
+  "steps": 50,
+  "ood": true
+}

@@ -1,0 +1,17 @@
+{
+  "sample_id": "ood_003_bok_zoo_fis",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/MiraData9K/000000001/000000001099.2.002.mp4",
+  "effects": [
+    "Bokeh",
+    "Zooming",
+    "Fisheye"
+  ],
+  "keyframes": [
+    "0:5.0,40:20.0,80:5.0",
+    "0:25.0,40:62.5,80:25.0",
+    null
+  ],
+  "seed": 1236,
+  "steps": 50,
+  "ood": true
+}

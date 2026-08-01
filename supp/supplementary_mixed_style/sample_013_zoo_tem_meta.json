@@ -1,0 +1,14 @@
+{
+  "sample_id": "sample_013_zoo_tem",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/MiraData9K/000000010/000000010407.0.035.mp4",
+  "effects": [
+    "Zooming",
+    "Temperature"
+  ],
+  "keyframes": [
+    "0:100.0,80:25.0",
+    "0:8000,80:3000"
+  ],
+  "seed": 789,
+  "steps": 50
+}

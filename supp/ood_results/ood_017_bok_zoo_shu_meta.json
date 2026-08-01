@@ -1,0 +1,17 @@
+{
+  "sample_id": "ood_017_bok_zoo_shu",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/DL3DV-10K/3K/9e249fd778184f593bc51e3b63fe27fa6cef1cb897a2d51aeba813c59bc63724_1.mp4",
+  "effects": [
+    "Bokeh",
+    "Zooming",
+    "Shutter"
+  ],
+  "keyframes": [
+    "0:2.0,80:18.0",
+    "0:25.0,80:100.0",
+    null
+  ],
+  "seed": 1015,
+  "steps": 50,
+  "ood": true
+}

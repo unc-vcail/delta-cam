@@ -1,0 +1,14 @@
+{
+  "sample_id": "sample_003_fis_tem",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/RealEstate10K/train/rJElQoZT5cU/ef022a0071e11efd.mp4",
+  "effects": [
+    "Fisheye",
+    "Temperature"
+  ],
+  "keyframes": [
+    null,
+    "0:3000,80:8000"
+  ],
+  "seed": 779,
+  "steps": 50
+}

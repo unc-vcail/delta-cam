@@ -1,0 +1,14 @@
+{
+  "sample_id": "sample_002_bok_tem",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/DL3DV-10K/4K/afabca9aa10e930e0a37eb0ecf6296441203fc24997f2138acfc1ff3962a18d9_1.mp4",
+  "effects": [
+    "Bokeh",
+    "Temperature"
+  ],
+  "keyframes": [
+    "0:2.0,40:12.0,80:22.0",
+    "0:3000,80:8000"
+  ],
+  "seed": 778,
+  "steps": 50
+}

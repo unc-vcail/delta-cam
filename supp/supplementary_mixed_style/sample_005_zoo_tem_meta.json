@@ -1,0 +1,14 @@
+{
+  "sample_id": "sample_005_zoo_tem",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/RealEstate10K/train/MO-nWEqM418/780faae4b70c35f7.mp4",
+  "effects": [
+    "Zooming",
+    "Temperature"
+  ],
+  "keyframes": [
+    "0:25.0,80:100.0",
+    "0:3000,80:8000"
+  ],
+  "seed": 781,
+  "steps": 50
+}

@@ -1,0 +1,17 @@
+{
+  "sample_id": "ood_007_bok_fis_tem",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/MiraData9K/000000000/000000000346.0.038.mp4",
+  "effects": [
+    "Bokeh",
+    "Fisheye",
+    "Temperature"
+  ],
+  "keyframes": [
+    "0:3.0,80:20.0",
+    null,
+    "0:3000,80:8000"
+  ],
+  "seed": 1005,
+  "steps": 50,
+  "ood": true
+}

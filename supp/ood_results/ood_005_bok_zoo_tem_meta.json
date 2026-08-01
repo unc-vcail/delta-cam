@@ -1,0 +1,17 @@
+{
+  "sample_id": "ood_005_bok_zoo_tem",
+  "video_path": "/work/users/d/e/debman/RealCam-Vid/RealCam-Vid/MiraData9K/000000049/000000049719.9.017.mp4",
+  "effects": [
+    "Bokeh",
+    "Zooming",
+    "Temperature"
+  ],
+  "keyframes": [
+    "0:18.0,80:3.0",
+    "0:100.0,80:25.0",
+    "0:9000,80:3000"
+  ],
+  "seed": 1003,
+  "steps": 50,
+  "ood": true
+}
