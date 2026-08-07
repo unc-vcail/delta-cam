@@ -2,41 +2,16 @@
   "sample1": {
     "effect": "bokeh",
     "label": "f/2.0  (K=17.0)",
-    "file": "1011_1011_f2.0.pth"
+    "file": "1000_1000_f2.0.pth"
   },
   "sample2": {
     "effect": "bokeh",
     "label": "f/2.0  (K=17.0)",
-    "file": "1000_1000_f2.0.pth"
+    "file": "1001_1001_f2.0.pth"
   },
   "sample3": {
     "effect": "bokeh",
     "label": "f/2.0  (K=17.0)",
-    "file": "1059_1059_f2.0.pth"
-  },
-  "sample4": {
-    "effect": "bokeh",
-    "label": "f/2.0  (K=17.0)",
-    "file": "1018_1018_f2.0.pth"
-  },
-  "sample5": {
-    "effect": "bokeh",
-    "label": "f/2.0  (K=17.0)",
-    "file": "1044_1044_f2.0.pth"
-  },
-  "sample6": {
-    "effect": "bokeh",
-    "label": "f/2.0  (K=17.0)",
-    "file": "1033_1033_f2.0.pth"
-  },
-  "sample7": {
-    "effect": "bokeh",
-    "label": "f/2.0  (K=17.0)",
-    "file": "102_102_f2.0.pth"
-  },
-  "sample8": {
-    "effect": "bokeh",
-    "label": "f/2.0  (K=17.0)",
-    "file": "1019_1019_f2.0.pth"
+    "file": "1002_1002_f2.0.pth"
   }
 }
