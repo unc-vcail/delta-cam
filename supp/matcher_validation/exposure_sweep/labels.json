@@ -1,0 +1,26 @@
+{
+  "setting1": {
+    "effect": "exposure",
+    "label": "EV +1.7",
+    "shot": "IMG_7969",
+    "scene": "canon_AutoMode_Scene001"
+  },
+  "setting2": {
+    "effect": "exposure",
+    "label": "EV +2.0",
+    "shot": "IMG_7976",
+    "scene": "canon_AutoMode_Scene001"
+  },
+  "setting3": {
+    "effect": "exposure",
+    "label": "EV +2.7",
+    "shot": "IMG_7968",
+    "scene": "canon_AutoMode_Scene001"
+  },
+  "setting4": {
+    "effect": "exposure",
+    "label": "EV +3.0",
+    "shot": "IMG_7967",
+    "scene": "canon_AutoMode_Scene001"
+  }
+}
